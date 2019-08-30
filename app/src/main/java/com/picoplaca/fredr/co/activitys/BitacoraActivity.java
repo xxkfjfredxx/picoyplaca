@@ -2,24 +2,18 @@ package com.picoplaca.fredr.co.activitys;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.picoplaca.fredr.co.AdapterBitacora;
+import com.picoplaca.fredr.co.adapters.AdapterBitacora;
 import com.picoplaca.fredr.co.R;
 import com.picoplaca.fredr.co.models.Plate;
 
@@ -41,12 +35,15 @@ public class BitacoraActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        listPlates = new ArrayList<>();
+        adapter = new AdapterBitacora(listPlates,this);
+        recyclerView.setAdapter(adapter);
         getDataFromFirebase();
     }
 
     private void getDataFromFirebase(){
         platesBd1 = FirebaseDatabase.getInstance().getReference();
-        listPlates = new ArrayList<>();
+
         platesBd1.child("placas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,8 +56,7 @@ public class BitacoraActivity extends AppCompatActivity {
                         String datereg = ds.child("dateRegister").getValue().toString();
                         listPlates.add(new Plate(id,plate,Boolean.parseBoolean(safe),Boolean.parseBoolean(contrav),datereg));
                     }
-                    adapter = new AdapterBitacora(listPlates,BitacoraActivity.this);
-                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
 
             }

@@ -1,15 +1,15 @@
-package com.picoplaca.fredr.co;
+package com.picoplaca.fredr.co.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.picoplaca.fredr.co.R;
 import com.picoplaca.fredr.co.models.Plate;
 
 import java.util.List;
@@ -32,8 +32,7 @@ public class AdapterBitacora extends RecyclerView.Adapter<AdapterBitacora.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.bitacora_list_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bitacora_list_items, parent, false);
         return new ViewHolder(view);
     }
 

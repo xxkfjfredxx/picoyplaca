@@ -139,12 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (TextUtils.isEmpty(setDate.getText().toString())) {
+        if (setDate.getText().toString().equals("dd/mm/yyyyy")) {
             Toast.makeText(this, "Ingrese la fecha", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(setTime.getText().toString())) {
+        if (setTime.getText().toString().equals("00:00:00")) {
             Toast.makeText(this, "Ingrese la hora", Toast.LENGTH_LONG).show();
             return;
         }
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean contrevencion = false;
         int hora = Integer.parseInt(hourTime);
         int min = Integer.parseInt(minTime);
-        if (hora >= 7 && hora <= 10) {
+        if (hora >= 7 && hora <= 9) {
             if(hora == 9 && min > 30){
                 contrevencion = false;
             }else{
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        if (hora >= 16 && hora <= 20) {
+        if (hora >= 16 && hora <= 19) {
             if(hora == 19 && min > 30){
                 contrevencion = false;
             }else{
