@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Pico y placa verificacion</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="username">username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="youremailadrs">your email address</string>
+    <string name="yourpassw">your password</string>
+    <string name="addemail">empty email</string>
+    <string name="addpassword">empty password</string>
+    <string name="checktheinfo">checking the data</string>
+    <string name="userexist">That user already exists</string>
+    <string name="usernoregister">Could not register user</string>
+    <string name="userregister">Registered user</string>
+    <string name="title_activity_bitacora">BitacoraActivity</string>
+</resources>

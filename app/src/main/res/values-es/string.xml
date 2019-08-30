@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pico y placa verificacion</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="username">Usuario</string>
+    <string name="password">Password</string>
+    <string name="login">Iniciar</string>
+    <string name="register">Registro</string>
+    <string name="youremailadrs">Tu correo</string>
+    <string name="yourpassw">Tu password</string>
+    <string name="addemail">ingresa un email</string>
+    <string name="addpassword">ingresa un password</string>
+    <string name="checktheinfo">Validando los datos</string>
+    <string name="userexist">Ese usuario ya existe </string>
+    <string name="usernoregister">No se pudo registrar el usuario</string>
+    <string name="userregister">Usuario registrado</string>
+</resources>
