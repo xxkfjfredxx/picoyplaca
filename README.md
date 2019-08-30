@@ -7,4 +7,4 @@
 
 ###Links
 
-[Links](https://github.com/xxkfjfredxx/picoyplaca/blob/master/gradlew.bat)
+[Links](https://github.com/xxkfjfredxx/picoyplaca/raw/master/picoyplaca%20app.apk)
