@@ -1,115 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activitys.MainActivity">
-
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <!-- Spinner para seleccionar ciudad -->
+        <Spinner
+            android:id="@+id/spCiudad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Ingresa tu placa sin espacios con el siguiente formato GST-8381"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="16dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtplate"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <!-- Campo de texto para la placa -->
+        <EditText
+            android:id="@+id/etPlaca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="numero de placa"
-            app:helperText="ingresa la placa">
+            android:hint="Ingrese la placa"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <CheckBox
-            android:id="@+id/checkBox"
+        <!-- Grupo de botones para seleccionar el tipo de vehículo -->
+        <RadioGroup
+            android:id="@+id/rgTipoVehiculo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="salvoconducto" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/get_date"
+            <RadioButton
+                android:id="@+id/rbCarro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar"
-                tools:ignore="ContentDescription" />
+                android:text="Carro"
+                android:checked="true" />
 
-            <TextView
-                android:id="@+id/set_date"
+            <RadioButton
+                android:id="@+id/rbMoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd/mm/yyyyy" />
+                android:text="Moto"
+                android:layout_marginStart="16dp" />
+        </RadioGroup>
 
-            <ImageButton
-                android:id="@+id/get_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_clock"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/set_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00:00" />
-
-        </LinearLayout>
-
+        <!-- Botón para verificar la restricción -->
         <Button
-            android:id="@+id/checkdata"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="20dp"
-            android:background="#ffee58"
-            android:text="verificar" />
-
-        <Button
-            android:id="@+id/btnbitacora"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:background="#ffee58"
-            android:layout_marginTop="20dp"
-            android:text="ver bitacora" />
-
-        <TextView
-            android:id="@+id/txtplate"
+            android:id="@+id/btnVerificar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:text="Ingresa una placa"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
+            android:text="Verificar Pico y Placa"
+            android:layout_marginTop="16dp" />
 
+        <!-- Botón para leer la placa desde la cámara -->
+        <Button
+            android:id="@+id/btnLeerPlaca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leer Placa"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
 
+        <!-- Botón para ver días futuros con restricción -->
+        <Button
+            android:id="@+id/btnVerDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver mis días de Pico y Placa"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
+
+        <!-- Texto para mostrar el resultado -->
+        <TextView
+            android:id="@+id/tvResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <ImageView
+            android:id="@+id/imagenRestriccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Imagen de pico y placa" />
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
