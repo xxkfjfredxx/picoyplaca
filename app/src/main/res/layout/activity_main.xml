@@ -55,14 +55,6 @@
             android:text="Verificar Pico y Placa"
             android:layout_marginTop="16dp" />
 
-        <!-- Botón para leer la placa desde la cámara -->
-        <Button
-            android:id="@+id/btnLeerPlaca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Leer Placa"
-            android:visibility="gone"
-            android:layout_marginTop="8dp" />
 
         <!-- Botón para ver días futuros con restricción -->
         <Button
@@ -89,5 +81,13 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:contentDescription="Imagen de pico y placa" />
+
+        <Button
+            android:id="@+id/btnLeerPlaca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver limites"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 </ScrollView>

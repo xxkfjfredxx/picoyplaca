@@ -1,9 +1,11 @@
 package com.fredrueda.picoplacacamera.view
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val permisosNecesarios = arrayOf(
-        Manifest.permission.CAMERA,
+        //Manifest.permission.CAMERA,
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
@@ -54,9 +56,10 @@ class MainActivity : AppCompatActivity() {
         detectarCiudadYSeleccionar()
         viewModel = ViewModelProvider(this).get(RestriccionViewModel::class.java)
 
-        verificarYSolicitarPermisos()
+        //verificarYSolicitarPermisos()
 
         binding.btnVerificar.setOnClickListener {
+            binding.btnLeerPlaca.visibility = View.GONE
             val ciudadSeleccionada = binding.spCiudad.selectedItem.toString()
             val placa = binding.etPlaca.text.toString()
             val tipo = if (binding.rbCarro.isChecked) "carro" else "moto"
@@ -74,23 +77,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnLeerPlaca.setOnClickListener {
-            val ciudadSeleccionada = binding.spCiudad.selectedItem.toString()
-            val placa = binding.etPlaca.text.toString()
-            val tipo = if (binding.rbCarro.isChecked) "carro" else "moto"
-
-            if (ciudadSeleccionada == "Selecciona tu ciudad") {
-                Toast.makeText(this, "Seleccione una ciudad", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            if (placa.isBlank()) {
-                Toast.makeText(this, "Ingrese una placa válida", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            viewModel.verificarPlaca(ciudadSeleccionada.lowercase(), tipo, placa)
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
         }
 
         viewModel.restriccion.observe(this) { restriccion ->
+            if(binding.spCiudad.selectedItem.toString().lowercase() == "armenia"){
+                binding.btnLeerPlaca.visibility = View.VISIBLE
+            }else{
+                binding.btnLeerPlaca.visibility = View.GONE
+            }
             binding.tvResultado.text = restriccion.mensaje
             Glide.with(this)
                 .load(restriccion.imagen)
