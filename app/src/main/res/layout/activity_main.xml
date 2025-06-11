@@ -45,7 +45,15 @@
                 android:layout_height="wrap_content"
                 android:text="Moto"
                 android:layout_marginStart="16dp" />
+
+            <RadioButton
+                android:id="@+id/rbTaxi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Taxi"
+                android:layout_marginStart="16dp" />
         </RadioGroup>
+
 
         <!-- Botón para verificar la restricción -->
         <Button

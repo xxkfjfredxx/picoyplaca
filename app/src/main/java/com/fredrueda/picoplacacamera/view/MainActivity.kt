@@ -60,16 +60,24 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnVerificar.setOnClickListener {
             binding.btnLeerPlaca.visibility = View.GONE
+            binding.imagenRestriccion.setImageDrawable(null)
             val ciudadSeleccionada = binding.spCiudad.selectedItem.toString()
             val placa = binding.etPlaca.text.toString()
-            val tipo = if (binding.rbCarro.isChecked) "carro" else "moto"
+            val tipo = when {
+                binding.rbCarro.isChecked -> "carro"
+                binding.rbMoto.isChecked -> "moto"
+                binding.rbTaxi.isChecked -> "taxi"
+                else -> "carro"
+            }
 
             if (ciudadSeleccionada == "Selecciona tu ciudad") {
                 Toast.makeText(this, "Seleccione una ciudad", Toast.LENGTH_SHORT).show()
+                binding.tvResultado.text = "Selecciona una ciudad valida"
                 return@setOnClickListener
             }
-            if (placa.isBlank()) {
-                Toast.makeText(this, "Ingrese una placa válida", Toast.LENGTH_SHORT).show()
+            if (!esPlacaValida(placa, tipo)) {
+                Toast.makeText(this, "La placa no es válida para el tipo seleccionado", Toast.LENGTH_SHORT).show()
+                binding.tvResultado.text = "La placa no es válida para el tipo seleccionado"
                 return@setOnClickListener
             }
 
@@ -93,6 +101,20 @@ class MainActivity : AppCompatActivity() {
                 .into(binding.imagenRestriccion)
         }
 
+    }
+
+    private fun esPlacaValida(placa: String, tipo: String): Boolean {
+        val placaMayuscula = placa.uppercase().trim()
+        val regexCarro = Regex("^[A-Z]{3}\\d{3}\$") // ABC123
+        val regexMoto = Regex("^[A-Z]{3}\\d{2}[A-Z]\$") // IVK57D
+        val regexTaxi = Regex("^[A-Z]{3}\\d{3}[A-Z]?\$") // ABC123 o ABC123D
+
+        return when (tipo.lowercase()) {
+            "carro" -> regexCarro.matches(placaMayuscula)
+            "moto" -> regexMoto.matches(placaMayuscula)
+            "taxi" -> regexTaxi.matches(placaMayuscula)
+            else -> false
+        }
     }
 
     private fun verificarYSolicitarPermisos() {

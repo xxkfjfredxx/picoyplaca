@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.Normalizer
@@ -39,9 +40,20 @@ class RestriccionRepository {
 
                 Log.d("Restriccion", "Consultando $ciudadApi/$tipoApi/$digito")
 
-                val response: ResponseBody =
-                    apiService.obtenerHtmlRestriccion(ciudadApi, tipoApi, digito)
-                val html = response.string()
+                val response = apiService.obtenerHtmlRestriccion(ciudadApi, tipoApi, digito)
+                if (!response.isSuccessful) {
+                    if (response.code() == 404) {
+                        return@withContext Restriccion(
+                            placa = placa,
+                            tieneRestriccion = false,
+                            mensaje = "⚠️ No se encontró información de pico y placa para '$ciudad' con tipo de vehículo '$tipo'. Es posible que la ciudad no tenga restricciones registradas.",
+                            ciudad = ciudad
+                        )
+                    } else {
+                        throw HttpException(response)
+                    }
+                }
+                val html = response.body()?.string() ?: throw Exception("Respuesta vacía.")
 
                 return@withContext parsearRestriccionDesdeHtml(placa, ciudadApi, html)
 
@@ -83,12 +95,15 @@ class RestriccionRepository {
         val fechasFormateadas = proximasFechas.joinToString("\n") { "• $it" }
 
         fun extraerSeccion(titulo: String): String {
-            val header = doc.select("*").firstOrNull { it.tagName().startsWith("h") && it.text().trim().equals(titulo, ignoreCase = true) }
+            val header = doc.select("*").firstOrNull {
+                it.tagName().startsWith("h") && it.text().trim().equals(titulo, ignoreCase = true)
+            }
             return header?.nextElementSibling()?.text()?.trim().orEmpty()
         }
 
         // ✅ NUEVA SECCIÓN: Observaciones con imagen y lista
-        val observacionesHeader = doc.select("h2").firstOrNull { it.text().contains("Observaciones", ignoreCase = true) }
+        val observacionesHeader =
+            doc.select("h2").firstOrNull { it.text().contains("Observaciones", ignoreCase = true) }
         val observacionesTexto = observacionesHeader?.nextElementSibling()?.text().orEmpty()
         val observacionesLista = observacionesHeader
             ?.nextElementSiblings()
